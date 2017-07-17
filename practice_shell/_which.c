@@ -10,7 +10,7 @@
  * Return: 0 if successful
  */
 
-/**
+/*
  * Algorithm:
  * 1) loop through linked directory list
  * 2) append the command to the directory

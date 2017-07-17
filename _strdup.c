@@ -18,6 +18,7 @@ char *_strdup(char *str)
 
 	if (!str)
 	{
+		/* set errno */
 		return (NULL);
 	}
 
@@ -26,9 +27,10 @@ char *_strdup(char *str)
 
 	if (!p)
 	{
-		errno = ENOMEM;
+		/* set errno */
 		return (NULL);
 	}
+
 	for (i = 0; i < len; i++)
 	{
 		p[i] = str[i];
