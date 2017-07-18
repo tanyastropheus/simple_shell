@@ -1,0 +1,46 @@
+.TH man 1 "JUL 17 2017" "1.0" "Holberton Simple Shell Project"
+.SH NAME
+hsh - Holberton Simple Shell
+.PP
+.SH SYNOPSIS
+.B hsh
+[command_string [arg...][file]]
+.PP
+.SH DESCRIPTION
+.B hsh
+is our own implementation of a command line interpreter that reads and executes basic commands using input from the user
+.PP
+.B hsh
+is compiled on Ubuntu 14.04 LTS with gcc 4.8.4 (C90).
+.PP
+.SH USER INPUT
+Input command and hit enter. The shell will do the following:
+
+1. Command will become an array.
+
+2. Looks for commands
+
+3. Executes command.
+.PP
+.SH BUILT-IN COMMANDS
+
+.B exit
+-Exits process
+
+.B env
+-Writes environment to stdout
+.PP
+.SH BUGS
+Will edit when found.
+.PP
+.SH AUTHORS
+Tanya Kryukova <tanya.kryukova@holbertonschool.com>
+
+Jeffrey Kanemitsu <jeffrey.kanemitsu@holbertonschool.com>
+.PP
+.SH SEE ALSO
+.BR man
+.BR sh
+
+.BR man
+.BR bash
