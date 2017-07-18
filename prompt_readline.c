@@ -29,14 +29,13 @@ char *prompt_readline(void)
 
 	if (r_count == -1 && buf != NULL)  /* EOF */
 	{
-		errno = EINVAL; /* check this */
-		if (write(STDOUT_FILENO, "\n", 1) == -1)
-			return (NULL); /* check this */
+		write(STDOUT_FILENO, "\n", 1);
 		exit(0); /* need to print error msg? */
 	}
+
 	else if (r_count == -1 && buf == NULL) /* getline failed */
 	{
-		errno = EINVAL;
+		perror("getline");
 		return (NULL);
 	}
 	w_comd = write(STDOUT_FILENO, buf, r_count);

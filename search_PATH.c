@@ -2,15 +2,15 @@
 /**
  * search_PATH - look for files in the current PATH
  *
- * @ac: number of commandline arguments
- * @av: list of commandline arguments
+ * @file: file to be found in PATH directory
+ * @envp: array of pointers to environment variables
  *
  * Description: called malloc(). Need to free()
  *
- * Return: 0 if file is found; -1 if not found
+ * Return: 0 if file is found,  -1 if not found
  */
 
-/**
+/*
  * Algorithm:
  * 1) loop through linked directory list
  * 2) append the command to the directory
@@ -26,7 +26,7 @@ int search_PATH(char *file, char *envp[])
 	unsigned int n, size;
 
 	head = NULL;
-	h = link_dir(&head);
+	h = link_dir(&head, envp);
 	temp = *h;
 	n = 256;
 	buf = malloc(sizeof(char) * n);
