@@ -13,30 +13,41 @@ int main(int ac, char *av[], char *envp[])
 {
 	char *s;
 	char **argv;
-	int ret_1, ret_2;
+	char *ret;
 
 	(void)(ac);
 	(void)(av);
 	while (1)
 	{
-		s = prompt_readline();
-		argv = comd_to_av(s);
-		if (*argv != NULL)
+		s = prompt_readline(); /* display prompt & read commandlind input */
+		argv = comd_to_av(s); /* parse commandline input into argv */
+		if (*argv != NULL) /* assume user did enter input */
 		{
-			ret_1 = search_PATH(argv[0], envp);
-			if (ret_1 == -1) /* command file not found */
+			if (argv[0][0] == '/')
 			{
-				/* note: need to include command name */
-				perror("not found");
-			}
-			else
-			{
-				ret_2 = fork_exec(argv, envp);
-				if (ret_2 == -1)
+				if (fork_exec(argv[0], argv, envp) == -1)
 				{
 					errno = ECHILD;
 					perror("fork");
 				}
+			}
+			else
+			{
+				ret = search_PATH(argv[0], envp);
+				/* command file not found */
+				if (ret == NULL)
+				{
+					/* note: need to include command name */
+					perror("not found");
+				}
+				else
+				{
+					if (fork_exec(ret, argv, envp) == -1)
+					{
+						errno = ECHILD;
+						perror("fork");
+					}
+ 				}
 			}
 		}
 	}

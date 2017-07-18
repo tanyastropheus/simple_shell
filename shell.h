@@ -34,8 +34,8 @@ char *_strcat(char *dest, char *src);
 int print_dir(void); /* how do we use this function? */
 char *_strcpy(char *dest, char *src);
 dir_t *traverse_end(dir_t *h);
-int search_PATH(char *file, char *envp[]);
-int fork_exec(char *av[], char *envp[]);
+char *search_PATH(char *file, char *envp[]);
+int fork_exec(char *file, char *av[], char *envp[]);
 
 
 

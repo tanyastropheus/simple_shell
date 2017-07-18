@@ -7,7 +7,7 @@
  *
  * Description: called malloc(). Need to free()
  *
- * Return: 0 if file is found,  -1 if not found
+ * Return: pointer to the absolute path of the file, or NULL if not found
  */
 
 /*
@@ -17,7 +17,7 @@
  * 3) check if the file exists
  */
 
-int search_PATH(char *file, char *envp[])
+char * search_PATH(char *file, char *envp[])
 {
 	dir_t *head, *temp;
 	dir_t **h;
@@ -50,9 +50,9 @@ int search_PATH(char *file, char *envp[])
 		{
 			write(STDOUT_FILENO, buf, _strlen(buf));
 			write(STDOUT_FILENO, "\n", 1);
-			return (0); /* file found */
+			return (buf); /* file found */
 		}
 		temp = temp->next;
 	}
-	return (-1); /* file not found */
+	return (NULL); /* file not found */
 }

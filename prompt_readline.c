@@ -11,7 +11,7 @@
 
 char *prompt_readline(void)
 {
-	ssize_t w_comd, r_count;
+	ssize_t r_count;
 	size_t size;
 	char *buf;
 
@@ -38,14 +38,6 @@ char *prompt_readline(void)
 		perror("getline");
 		return (NULL);
 	}
-	w_comd = write(STDOUT_FILENO, buf, r_count);
-	if (w_comd != r_count) /* if write() failed to read line*/
-	{
-		/* check error handling function */
-		free(buf);
-		return (NULL);
-	}
-	/* will call free() in main, right? */
 	return (buf);
 
 }

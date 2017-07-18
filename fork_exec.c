@@ -12,10 +12,11 @@
  * Return: 0 if successful, -1 if failed
  */
 
-int fork_exec(char *av[], char *envp[])
+int fork_exec(char *file, char *argv[], char *envp[])
 {
 	pid_t pid, my_pid;
 	int status;
+	int ret;
 
 	my_pid = getpid();
 	printf("parent pid: %d\n", (int)my_pid);
@@ -37,7 +38,10 @@ int fork_exec(char *av[], char *envp[])
 	{
 		my_pid = getpid();
 		printf("inside child process, id: %d\n", (int)my_pid);
-		if (execve(av[0], av, envp) == -1)  /* program not executable */
+		printf("command to be excuted: %s\n", file);
+		ret = execve(file, argv, envp);
+		printf("execve return: %d\n", ret);
+		if (ret == -1)  /* program not executable */
 		{
 			perror("execve");
 			exit(EXIT_FAILURE);
