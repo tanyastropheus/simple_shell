@@ -23,6 +23,7 @@ typedef struct dir_s
 } dir_t;
 
 char *prompt_readline(void);
+char *readline(void);
 char *_strdup(char *str);
 char **comd_to_av(char *s);
 char *_getenv(const char *name, char *envp[]);
