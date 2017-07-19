@@ -19,11 +19,14 @@ int main(int ac, char *av[], char *envp[])
 	(void)(av);
 	while (1)
 	{
-		s = prompt_readline(); /* display prompt & read commandlind input */
+		if (isatty(STDIN_FILENO))
+			s = prompt_readline();
+		else
+			s = readline();
 		argv = comd_to_av(s); /* parse commandline input into argv */
 		if (*argv != NULL) /* assume user did enter input */
 		{
-			if (argv[0][0] == '/')
+			if (argv[0][0] == '/') /* if command is absolute path */
 			{
 				if (fork_exec(argv[0], argv, envp) == -1)
 				{
