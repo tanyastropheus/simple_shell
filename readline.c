@@ -2,36 +2,34 @@
 /**
  * readline - read commandline input string w/o displaying prompt
  *
+ * @mem: pointer to the struct that contains a char pointer s to the buffer
+ *
  * Description:
  * 1) getline() calls malloc() to allocate memory for the line
  * 2) program need to call free() after invoking this function
  *
- * Return: double pointer to the buffer where commandline string is stored
+ * Return: pointer to the buffer where commandline string is stored
  */
 
-char *readline(void)
+char *readline(mem_t *mem)
 {
 	ssize_t r_count;
 	size_t size;
-	char *buf;
 
-	buf = NULL; /* getline()  mallocs memory with appropriate size
-		     * when buf == NULL
-		     */
+	mem->s = NULL; /* getline()  mallocs memory with appropriate size
+			* when buf == NULL
+			*/
 
-	r_count = getline(&buf, &size, stdin);
+	r_count = getline(&(mem->s), &size, stdin);
 
-	if (r_count == -1 && buf != NULL)  /* EOF */
-	{
-/*		write(STDOUT_FILENO, "\n", 1);
- */		exit(0); /* need to print error msg? */
-	}
+	if (r_count == -1 && mem->s != NULL)  /* EOF */
+		exit(0); /* need to print error msg? */
 
-	else if (r_count == -1 && buf == NULL) /* getline failed */
+	else if (r_count == -1 && mem->s == NULL) /* getline failed */
 	{
 		perror("getline");
 		return (NULL);
 	}
-	return (buf);
+	return (mem->s);
 
 }

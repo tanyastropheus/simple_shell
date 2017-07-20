@@ -4,6 +4,7 @@
  * comd_to_av - split string s based on the delimiter specified
  *
  * @s: commandline string
+ * @mem: pointer to the mem_t struct that stores variables to be freed
  *
  * Description:
  * 1) string is modified (with delimiter replaced by '\0') after strtok()
@@ -22,14 +23,13 @@
  * 4) loop with strtok() again on the string copy to store pointers to memory
  */
 
-char **comd_to_av(char *s)
+char **comd_to_av(char *s, mem_t *mem)
 {
-	char *word, *strcp, *tok;
-	char **av;
+	char *word, *tok;
 	unsigned int w_count, i;
 
-	strcp = _strdup(s);
-	if (!strcp)
+	mem->strcp = _strdup(s);
+	if (!(mem->strcp))
 		return (NULL); /* errno set inside _strdup() */
 
 	w_count = 0;
@@ -44,20 +44,21 @@ char **comd_to_av(char *s)
 		w_count++;
 		word = strtok(NULL, "\n\t\r ");
 	}
-	av = malloc(sizeof(char *) * (w_count + 1)); /* need to add NULL ptr */
 
-	if (!av)
+	mem->argv = malloc(sizeof(char *) * (w_count + 1)); /* need to add NULL ptr */
+
+	if (!(mem->argv))
 		return (NULL); /* set errno */
 
 	/* store pointers to the array allocated */
 	i = 0;
-	tok = strtok(strcp, "\n\t\r ");
+	tok = strtok(mem->strcp, "\n\t\r ");
 	while (tok != NULL)
 	{
-		av[i] = tok;
+		mem->argv[i] = tok;
 		tok = strtok(NULL, "\n\t\r ");
 		i++;
 	}
-	av[i] = NULL;
-	return (av);
+	mem->argv[i] = NULL;
+	return (mem->argv);
 }

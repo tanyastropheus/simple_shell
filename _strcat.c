@@ -14,7 +14,8 @@ char *_strcat(char *dest, char *src)
 	int n = 0;
 	int k = 0;
 
-	/* find the strlen of *dest
+	/*
+	 * find the strlen of *dest
 	 * strlen includes '\0' due to the order of the code
 	 */
 	while (*(dest + n) != '\0')
@@ -22,7 +23,8 @@ char *_strcat(char *dest, char *src)
 		n++;
 	}
 
-	/* find the strlen of *src
+	/*
+	 * find the strlen of *src
 	 * strlen includes '\0' due to the order of the code
 	 */
 	while (*(src + k) != '\0')

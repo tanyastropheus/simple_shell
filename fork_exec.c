@@ -3,7 +3,8 @@
 /**
  * fork_exec - fork and execute program in the child process
  *
- * @av: list of pointers to commandline arguments
+ * @file: pointer to the string that is the command to be executed
+ * @argv: list of pointers to commandline arguments
  * @envp: list of pointers to environment variables
  *
  * Description:
@@ -14,12 +15,9 @@
 
 int fork_exec(char *file, char *argv[], char *envp[])
 {
-	pid_t pid, my_pid;
+	pid_t pid;
 	int status;
 	int ret;
-
-	my_pid = getpid();
-	printf("parent pid: %d\n", (int)my_pid);
 
 	pid = fork();
 	if (pid == -1)
@@ -29,18 +27,12 @@ int fork_exec(char *file, char *argv[], char *envp[])
 	}
 	else if (pid > 0)
 	{
-		printf("my pid is: %d\n", (int) my_pid);
-/*		free();
- */		wait(&status);
+		wait(&status);
 		return (0);
 	}
 	else if (pid == 0)
 	{
-		my_pid = getpid();
-		printf("inside child process, id: %d\n", (int)my_pid);
-		printf("command to be excuted: %s\n", file);
 		ret = execve(file, argv, envp);
-		printf("execve return: %d\n", ret);
 		if (ret == -1)  /* program not executable */
 		{
 			perror("execve");

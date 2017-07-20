@@ -4,7 +4,7 @@
  * add_nodedir_end - add a node at the end  of a dir_t list
  *
  * @head: head to the first node
- * @ptr: pointer to the directory in PATH that is to be  stored at the node
+ * @s: pointer to the directory string
  *
  * Return: address of the last node, or NULL if failed
  */

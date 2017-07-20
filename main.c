@@ -11,24 +11,22 @@
 
 int main(int ac, char *av[], char *envp[])
 {
-	char *s;
-	char **argv;
-	char *ret;
+	mem_t memory = {NULL, NULL, NULL, NULL, NULL, NULL};
 
 	(void)(ac);
 	(void)(av);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			s = prompt_readline();
+			memory.s = prompt_readline(&memory);
 		else
-			s = readline();
-		argv = comd_to_av(s); /* parse commandline input into argv */
-		if (*argv != NULL) /* assume user did enter input */
+			memory.s = readline(&memory);
+		memory.argv = comd_to_av(memory.s, &memory);
+		if (*(memory.argv) != NULL) /* assume user did enter input */
 		{
-			if (argv[0][0] == '/') /* if command is absolute path */
+			if (memory.argv[0][0] == '/') /* if command is absolute path */
 			{
-				if (fork_exec(argv[0], argv, envp) == -1)
+				if (fork_exec(memory.argv[0], memory.argv, envp) == -1)
 				{
 					errno = ECHILD;
 					perror("fork");
@@ -36,23 +34,20 @@ int main(int ac, char *av[], char *envp[])
 			}
 			else
 			{
-				ret = search_PATH(argv[0], envp);
-				/* command file not found */
-				if (ret == NULL)
-				{
-					/* note: need to include command name */
-					perror("not found");
-				}
+				memory.buf = search_PATH(memory.argv[0], envp, &memory);
+				if (memory.buf == NULL) /* if command file is not found */
+					perror("not found"); /* note: need to include command name */
 				else
 				{
-					if (fork_exec(ret, argv, envp) == -1)
+					if (fork_exec(memory.buf, memory.argv, envp) == -1)
 					{
 						errno = ECHILD;
 						perror("fork");
 					}
- 				}
+				}
 			}
 		}
+		free_all(&memory);
 	}
 	return (0);
 }
