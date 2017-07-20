@@ -43,7 +43,7 @@ char *search_PATH(char *file, char *envp[], mem_t *mem)
 
 		if (stat(mem->buf, &st) == 0) /* check if file exists */
 			return (mem->buf); /* file found */
-
+		free(mem->buf);
 		temp = temp->next;
 	}
 	return (NULL); /* file not found */
