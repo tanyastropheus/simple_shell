@@ -10,13 +10,13 @@
 void free_all(mem_t *mem)
 {
 	dir_t *temp;
-/*	unsigned int i;
- */
+
 	free(mem->s);
 	mem->s = NULL; /* reset the pointer to prevent future accidental use */
 	free(mem->strcp);
 	mem->strcp = NULL;
-	/* no need to free argv[i] in a loop, since the string argv
+	/*
+	 * no need to free argv[i] in a loop, since the string argv
 	 * points to (mem->strcp), which is a contiguous array tokenized into
 	 * argv[i]
 	 */
