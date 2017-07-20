@@ -22,7 +22,7 @@ char *search_PATH(char *file, char *envp[], mem_t *mem)
 {
 	dir_t *head, *temp;
 	struct stat st;
-	unsigned int n, size;
+	unsigned int size;
 
 	head = NULL;
 	link_dir(&head, envp, mem);
@@ -30,20 +30,13 @@ char *search_PATH(char *file, char *envp[], mem_t *mem)
 			* a node allocated on heap
 			*/
 	temp = head;
-	n = 256;
-	mem->buf = malloc(sizeof(char) * n);
 
 	while (temp)
 	{
 		/* need to account for '\0' and "/" */
 		size = _strlen(temp->dir) + _strlen(file) + 2;
-		/* if the string exceeds allocated buffer size */
-		if (size > n)
-		{
-			free(mem->buf);
-			mem->buf = malloc(sizeof(char) * size);
-			n = size; /* expand buffer for subsequent searches */
-		}
+		/* allocate memory accordingly */
+		mem->buf = malloc(sizeof(char) * size);
 		_strcpy(mem->buf, temp->dir);  /* copy directory to buffer */
 		_strcat(mem->buf, "/"); /* appends the command */
 		_strcat(mem->buf, file);
