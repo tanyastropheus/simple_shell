@@ -10,31 +10,29 @@
 void free_all(mem_t *mem)
 {
 	dir_t *temp;
-	unsigned int i;
-
+/*	unsigned int i;
+ */
 	free(mem->s);
 	mem->s = NULL; /* reset the pointer to prevent future accidental use */
 	free(mem->strcp);
 	mem->strcp = NULL;
+	/* no need to free argv[i] in a loop, since the string argv
+	 * points to (mem->strcp), which is a contiguous array tokenized into
+	 * argv[i]
+	 */
+	free(mem->argv);
+	mem->argv = NULL;
 	free(mem->env_cpy);
 	mem->env_cpy = NULL;
 	free(mem->buf);
 	mem->buf = NULL;
 
-	while (mem->h) /* free the singly linked list */
+/* free the singly linked list */
+	while (mem->h)
 	{
 		temp = mem->h;
 		mem->h = mem->h->next;
 		free(temp);
 	}
 	mem->h = NULL;
-
-	i = 0;
-	while (mem->argv[i]) /* free the argv list */
-	{
-		free(mem->argv[i]);
-		i++;
-	}
-	free(mem->argv);
-	mem->argv = NULL;
 }

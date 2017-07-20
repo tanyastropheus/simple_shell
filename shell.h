@@ -14,15 +14,29 @@
 #include <sys/resource.h>
 #include <errno.h>
 
+/**
+ * struct dir_s - struct for elements in the singly linked list of directories
+ * @dir: pointer to the directory in PATH
+ * @next: pointer to the next node
+ */
 
-/* struct for PATH directories */
 typedef struct dir_s
 {
 	char *dir;
 	struct dir_s *next;
 } dir_t;
 
-/* struct for memory allocated */
+/**
+ * struct mem_s - struct for pointers to malloced memory in the program
+ * @s: pointer to the string read and allocated in heap by getline()
+ * @strcp: pointer to the copy of string s which strtok() is called on to count
+ * the number of tokens
+ * @argv: double pointer to the array of pointers to the tokenized string strcp
+ * @env_cpy: pointer to the string that is a  copy of the environment variable
+ * @h: pointer to the head node of the singly linked list
+ * @buf: pointer to the string that is the absolute path of the command
+ */
+
 typedef struct mem_s
 {
 	char *s;
@@ -43,7 +57,7 @@ dir_t *add_nodedir_end(dir_t **head, char *s);
 int _strcmp(char *s1, char *s2);
 unsigned int _strlen(char *s);
 char *_strcat(char *dest, char *src);
-int print_dir(void); /* how do we use this function? */
+/*int print_dir(void); /* how do we use this function? */
 char *_strcpy(char *dest, char *src);
 dir_t *traverse_end(dir_t *h);
 char *search_PATH(char *file, char *envp[], mem_t *mem);
