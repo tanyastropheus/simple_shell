@@ -57,7 +57,7 @@ dir_t *add_nodedir_end(dir_t **head, char *s);
 int _strcmp(char *s1, char *s2);
 unsigned int _strlen(char *s);
 char *_strcat(char *dest, char *src);
-/*int print_dir(void); /* how do we use this function? */
+/*int print_dir(void); */
 char *_strcpy(char *dest, char *src);
 dir_t *traverse_end(dir_t *h);
 char *search_PATH(char *file, char *envp[], mem_t *mem);
